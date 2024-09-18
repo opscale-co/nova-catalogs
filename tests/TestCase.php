@@ -1,10 +1,9 @@
 <?php
 
-namespace :namespace_vendor\:namespace_tool_name\Tests;
+namespace Opscale\NovaCatalogs\Tests;
 
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
-use :namespace_vendor\:namespace_tool_name\ToolServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -18,7 +17,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            :namespace_tool_nameToolServiceProvider::class,
+            NovaCatalogsToolServiceProvider::class,
         ];
     }
 }

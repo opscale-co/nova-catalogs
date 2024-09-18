@@ -1,6 +1,6 @@
 {
-    "name": ":vendor/:package_name",
-    "description": ":package_description",
+    "name": "opscale-co/nova-catalogs",
+    "description": "A simple repository for managing data for the app",
     "keywords": [
         "laravel",
         "nova"
@@ -11,12 +11,12 @@
             "url": "https://nova.laravel.com"
         }
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/opscale-co/nova-catalogs",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Opscale",
+            "email": "development@opscale.co",
             "role": "Developer"
         }
     ],
@@ -27,18 +27,18 @@
     },
     "autoload": {
         "psr-4": {
-            ":namespace_vendor\\:namespace_tool_name\\": "src/"
+            "Opscale\\NovaCatalogs\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            ":namespace_vendor\\:namespace_tool_name\\Tests\\": "tests"
+            "Opscale\\NovaCatalogs\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                ":namespace_vendor\\:namespace_tool_name\\:namespace_tool_nameToolServiceProvider"
+                "Opscale\\NovaCatalogs\\NovaCatalogsToolServiceProvider"
             ]
         }
     },
