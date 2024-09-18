@@ -1,0 +1,21 @@
+name: Sync Template Changes
+
+on:
+  schedule:
+    - cron: '0 0 1,15 * *' # Every 2 weeks at midnight
+  workflow_dispatch: # on button click
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Template Sync
+      uses: tgymnich/fork-sync@v2.0.10
+      with:
+        owner: opscale-co
+        repo: nova-tool
+        base: main
+        head: main
+        auto_approve: true
+        personal_token: ${{ secrets.REVIEW_TOKEN }}
