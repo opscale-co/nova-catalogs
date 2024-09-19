@@ -22,7 +22,7 @@ class Catalog extends Model
     {
         $collection = static::fromSlug($slug);
 
-        return $collection->items->pluck('name', 'key');
+        return $collection->items->pluck('name', 'key')->toArray();
     }
 
     public static function optionsFromParent($slug, $parentKey)
@@ -36,7 +36,7 @@ class Catalog extends Model
             ->orderBy('name')
             ->get();
 
-        return $collection->pluck('name', 'key');
+        return $collection->pluck('name', 'key')->toArray();
     }
 
     public static function item($slug, $itemKey)
