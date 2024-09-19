@@ -16,13 +16,15 @@ Thanks for helping Opscale continue to grow! 🚀
 
 
 
-# A simple repository for managing data for the app
+# Description
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/opscale-co/nova-catalogs.svg?style=flat-square)](https://packagist.org/packages/opscale-co/nova-catalogs)
 
-This is where your description should go. Try and limit it to a paragraph or two.
+A simple repository for managing reusable data for a Nova app
 
-Add a screenshot of the tool here.
+You can test a live demo in our [playground](https://playground.opscale.co)
+
+TODO: Add a screenshot of the tool here.
 
 ## Installation
 
@@ -52,7 +54,26 @@ public function tools()
 
 ## Usage
 
-Click on the "nova-catalogs" menu item in your Nova app to see the tool provided by this package.
+Simply add the reference of the Catalog resource wherever you think is useful for managing the content.
+
+Then you can use the data in Select fields, tags, autocompletion, etc:
+
+``` php
+
+use Opscale\NovaCatalogs\Models\Catalog;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
+
+...
+
+Select::make('Label', 'field')
+    ->options(Catalog::optionsFromSlug('your-slug'))
+    ->displayUsingLabels(),
+
+Text::make('Label', 'field')->required()
+    ->suggestions(Catalog::optionsFromSlug('your-slug')),
+
+```
 
 ## Testing
 

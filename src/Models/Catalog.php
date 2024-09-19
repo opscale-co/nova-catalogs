@@ -9,7 +9,7 @@ class Catalog extends Model
 {
     public $timestamps = false;
 
-    public static function fromSlug($slug)
+    public static function fromSlug(string $slug): Catalog
     {
         return Cache::rememberForever('catalogs.' . $slug, function () use ($slug) {
             return static::with('items')->whereHas('items', function ($query) {
@@ -18,14 +18,14 @@ class Catalog extends Model
         });
     }
 
-    public static function optionsFromSlug($slug)
+    public static function optionsFromSlug(string $slug): array
     {
         $collection = static::fromSlug($slug);
 
-        return $collection->items->pluck('name', 'key');
+        return $collection->items->pluck('name', 'key')->toArray();
     }
 
-    public static function optionsFromParent($slug, $parentKey)
+    public static function optionsFromParent(string $slug, string $parentKey): array
     {
         $catalog = static::fromSlug($slug);
         $parent = CatalogItem::where('catalog_id', $catalog->id)
@@ -36,17 +36,17 @@ class Catalog extends Model
             ->orderBy('name')
             ->get();
 
-        return $collection->pluck('name', 'key');
+        return $collection->pluck('name', 'key')->toArray();
     }
 
-    public static function item($slug, $itemKey)
+    public static function item(string $slug, string $itemKey): CatalogItem
     {
-        $collection = static::withIdentifier($slug);
-        $value = $collection->first(function ($value, $key) use ($itemKey) {
+        $catalog = static::fromSlug($slug);
+        $value = $catalog->items->first(function ($value, $key) use ($itemKey) {
             return $key == $itemKey;
         });
 
-        return $value ?? $itemKey;
+        return $value;
     }
 
     protected static function rules()
