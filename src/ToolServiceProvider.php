@@ -1,70 +1,26 @@
 <?php
 
-namespace :namespace_vendor\:namespace_tool_name;
+namespace Opscale\NovaCatalogs;
 
-use Laravel\Nova\Events\ServingNova;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
-use :namespace_vendor\:namespace_tool_name\Http\Middleware\Authorize;
-use Laravel\Nova\Nova;
+use Opscale\NovaCatalogs\Configuration\NovaPackage;
+use Opscale\NovaCatalogs\Configuration\NovaPackageServiceProvider;
+use Opscale\NovaCatalogs\Nova\Catalog;
+use Opscale\NovaCatalogs\Nova\CatalogItem;
+use Spatie\LaravelPackageTools\Package;
 
-class ToolServiceProvider extends ServiceProvider
+class ToolServiceProvider extends NovaPackageServiceProvider
 {
-    public function boot()
+    public function newPackage(): Package
     {
-        $this->loadRoutes();
-        /*$this->loadConfigs();
-
-        if ($this->app->runningInConsole()) {
-            $this->loadCommands();
-            $this->loadMigrations();
-        }
-            
-        Nova::serving(function (ServingNova $event) {
-            $this->loadResources();
-        });*/
+        return new NovaPackage;
     }
 
-    public function register()
+    public function configurePackage(Package $package): void
     {
-        //
+        $package
+            ->name('nova-catalogs')
+            ->discoversMigrations()
+            ->runsMigrations()
+            ->hasResources([Catalog::class, CatalogItem::class]);
     }
-
-    /*protected function loadResources()
-    {
-        Nova::resources([]);
-    }
-
-    protected function loadRoutes()
-    {
-        if ($this->app->routesAreCached()) {
-            return;
-        }
-
-        Route::middleware(['nova', Authorize::class])
-                ->prefix('nova-vendor/:vendor/:package_name')
-                ->group(__DIR__.'/../routes/api.php');
-    }
-                
-    protected function loadConfigs()
-    {
-        $filename = ':package_name.php';
-        $this->publishes([
-            __DIR__."/../config/$filename" => config_path($filename),
-        ]);
-    }
-
-    protected function loadCommands()
-    {
-        $this->commands([]);
-    }
-
-    protected function loadMigrations()
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-
-        $this->publishesMigrations([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
-        ]);
-    }*/
 }
