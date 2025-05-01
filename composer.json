@@ -1,12 +1,14 @@
 {
     "name": "opscale-co/nova-catalogs",
     "description": "A simple repository for managing catalogs in your Nova app",
+    "version": "1.0.0",
     "keywords": [
         "laravel",
         "nova",
         "package",
         "tool",
-        "opscale"
+        "opscale",
+        "catalog"
     ],
     "repositories": [
         {
