@@ -1,0 +1,17 @@
+{
+    "Catalogs": "Catálogos",
+    "Catalog": "Catálogo",
+    "catalogs": "catalogos",
+    "Items": "Items",
+    "Item": "Item",
+    "catalog-items": "items-catalogo",
+    "Parent": "Padre",
+    "Name": "Nombre",
+    "Key": "Clave",
+    "Identifier": "Identificador",
+    "Description": "Descripción",
+    "Metadata": "Metadatos",
+    "Catalogable": "Catalogable",
+    "Add Item": "Agregar Item",
+    "Value": "Valor"
+}

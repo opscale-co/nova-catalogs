@@ -20,9 +20,9 @@ class ToolServiceProvider extends NovaPackageServiceProvider
                 Catalog::class,
                 CatalogItem::class,
             ])
+            ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('opscale-co/nova-catalogs');
             });
     }

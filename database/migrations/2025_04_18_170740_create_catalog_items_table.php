@@ -9,14 +9,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('catalog_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('catalog_id')->constrained();
-            $table->foreignId('parent_id')
-                ->nullable()
-                ->constrained(table: 'catalog_items', indexName: 'parent_idx');
+            $table->ulid('id')->primary();
+            $table->foreignUlid('catalog_id')->constrained();
             $table->string('name');
             $table->string('key');
             $table->json('metadata')->nullable();
+
+            $table->unique(['catalog_id', 'key']);
         });
     }
 

@@ -1,0 +1,17 @@
+{
+    "Catalogs": "Catalogs",
+    "Catalog": "Catalog",
+    "catalogs": "catalogs",
+    "Items": "Items",
+    "Item": "Item",
+    "catalog-items": "catalog-items",
+    "Parent": "Parent",
+    "Name": "Name",
+    "Key": "Key",
+    "Identifier": "Identifier",
+    "Description": "Description",
+    "Metadata": "Metadata",
+    "Catalogable": "Catalogable",
+    "Add Item": "Add Item",
+    "Value": "Value"
+}

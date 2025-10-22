@@ -2,33 +2,35 @@
 
 namespace Opscale\NovaCatalogs\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 
 class CatalogItem extends Model
 {
+    use HasUlids;
+
     public $timestamps = false;
 
     public $casts = [
         'metadata' => 'object',
     ];
 
-    protected static function rules(string $property)
-    {
-        $rules = [
-            'name' => ['required', 'max:50'],
-            'key' => ['required', 'max:25'],
-        ];
-
-        return isset($rules[$property]) ? $rules[$property] : null;
-    }
+    /**
+     * @var array<string, array<int, string>>
+     */
+    public array $validationRules = [
+        'name' => ['required', 'max:256'],
+        'key' => ['required', 'max:25'],
+        'metadata' => ['nullable', 'json'],
+    ];
 
     public function catalog()
     {
         return $this->belongsTo(Catalog::class);
     }
 
-    public function parent()
+    public function catalogs(): MorphMany
     {
-        return $this->belongsTo(CatalogItem::class);
+        return $this->morphMany(Catalog::class, 'catalogable');
     }
 }

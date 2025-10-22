@@ -9,10 +9,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('catalogs', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
+            $table->nullableUlidMorphs('catalogable');
             $table->string('name');
+            $table->string('key')->unique();
             $table->string('description', 512)->nullable();
-            $table->string('slug');
+            $table->json('metadata')->nullable();
         });
     }
 
