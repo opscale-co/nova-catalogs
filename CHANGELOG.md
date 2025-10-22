@@ -2,6 +2,16 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## 1.2.0 (2025-10-22)
+
+* refactor(composer.json): merge ([644a4b3](https://github.com/opscale-co/nova-catalogs/commit/644a4b3))
+* feat(catalog): added support for parentable catalogs ([d612309](https://github.com/opscale-co/nova-catalogs/commit/d612309))
+
+
+### BREAKING CHANGE
+
+* The structure of the database has changed
+
 ## 1.1.0 (2025-10-03)
 
 * perf(serviceprovider): using nova-package-tools ([5730cdd](https://github.com/opscale-co/nova-catalogs/commit/5730cdd))
