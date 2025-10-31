@@ -13,6 +13,8 @@ use Opscale\NovaCatalogs\Models\CatalogItem as Model;
 class CatalogItem extends Resource
 {
     public static $model = Model::class;
+    public static $displayInNavigation = false;
+
 
     public static $title = 'name';
 

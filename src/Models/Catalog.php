@@ -4,11 +4,13 @@ namespace Opscale\NovaCatalogs\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Opscale\NovaCatalogs\Concerns\Catalogable;
 use Opscale\NovaCatalogs\Models\Repositories\CatalogRepository;
 
 class Catalog extends Model
 {
     use CatalogRepository;
+    use Catalogable;
     use HasUlids;
 
     public $timestamps = false;
