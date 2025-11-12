@@ -4,10 +4,13 @@ namespace Opscale\NovaCatalogs\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Opscale\NovaCatalogs\Concerns\Catalogable;
 
 class CatalogItem extends Model
 {
     use HasUlids;
+    use Catalogable;
 
     public $timestamps = false;
 
