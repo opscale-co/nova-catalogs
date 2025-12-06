@@ -20,8 +20,7 @@ A simple repository for managing catalogs in your Nova app.
 
 Every app needs a set of options for fields in forms. Instead of define these options in code, allow users to dinamically manage them easily.
 
-![Catalog creation](https://raw.githubusercontent.com/opscale-co/nova-catalogs/refs/heads/main/screenshots/catalog-creation.png)
-![Catalog demo](https://raw.githubusercontent.com/opscale-co/nova-catalogs/refs/heads/main/screenshots/catalog-demo.png)
+![Catalog demo](https://raw.githubusercontent.com/opscale-co/nova-catalogs/refs/heads/main/screenshots/nova-catalogs.gif)
 
 ## Installation
 
@@ -53,7 +52,46 @@ public function tools()
 
 ## Usage
 
-You will see a “Catalogs” item in your menu by default. You can add new catalogs using this CRUD.
+### Via UI
+
+A "Catalogs" menu item is available by default. Use the Nova interface to create and manage catalogs and their items.
+
+### Via Code
+
+Use the `Catalogable` trait to parent catalogs to your models:
+
+```php
+use Opscale\NovaCatalogs\Concerns\Catalogable;
+
+class Company extends Model
+{
+    use Catalogable;
+}
+```
+
+Retrieve catalog options using `options()` or `filteredOptions()`. Both methods use cache for performance:
+
+```php
+use Opscale\NovaCatalogs\Models\Catalog;
+
+// Get all options as key => name array
+Catalog::options('countries');
+```
+
+Catalogs and catalog items have a `metadata` field for storing extra information. Use `filteredOptions()` to filter by metadata or other properties:
+
+```php
+// Filter options using a callback (e.g., by metadata)
+Catalog::filteredOptions('countries', fn ($item) => $item->metadata['continent'] === 'europe');
+```
+
+Use with Nova Select fields:
+
+```php
+Select::make('Country')
+    ->options(Catalog::options('countries'))
+    ->displayUsingLabels();
+```
 
 ## Testing
 
