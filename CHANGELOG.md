@@ -2,6 +2,17 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## <small>1.2.1 (2025-12-06)</small>
+
+* docs(readme): updated readme ([8a9548a](https://github.com/opscale-co/nova-catalogs/commit/8a9548a))
+* refactor(catalogitem): removed from menu ([f413893](https://github.com/opscale-co/nova-catalogs/commit/f413893))
+* refactor(workbench): modified workbench scenario ([b2b7a80](https://github.com/opscale-co/nova-catalogs/commit/b2b7a80))
+* Merge branch 'main' of https://github.com/opscale-co/nova-catalogs ([2fd9ec1](https://github.com/opscale-co/nova-catalogs/commit/2fd9ec1))
+* Merge pull request #4 from findex-la/fix/traductions ([f1a0c3b](https://github.com/opscale-co/nova-catalogs/commit/f1a0c3b)), closes [#4](https://github.com/opscale-co/nova-catalogs/issues/4)
+* Merge pull request #6 from findex-la/refactor/catalogable ([20f2242](https://github.com/opscale-co/nova-catalogs/commit/20f2242)), closes [#6](https://github.com/opscale-co/nova-catalogs/issues/6)
+* refactor (Adds reusable catalog-related trait to model), fix import ([8b0b959](https://github.com/opscale-co/nova-catalogs/commit/8b0b959))
+* Replaces _() with __() for translation functions ([8b72296](https://github.com/opscale-co/nova-catalogs/commit/8b72296))
+
 ## 1.2.0 (2025-10-22)
 
 * refactor(composer.json): merge ([644a4b3](https://github.com/opscale-co/nova-catalogs/commit/644a4b3))
