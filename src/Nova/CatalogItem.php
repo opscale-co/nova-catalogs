@@ -21,6 +21,13 @@ class CatalogItem extends Resource
         'key',
     ];
 
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = false;
+
     public static function label()
     {
         return __('Items');
