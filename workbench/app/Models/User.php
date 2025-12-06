@@ -17,6 +17,7 @@ use Workbench\Database\Factories\UserFactory;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
+ * @property string|null $country
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
@@ -43,6 +44,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'country',
     ];
 
     /**

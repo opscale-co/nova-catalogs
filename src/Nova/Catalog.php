@@ -51,7 +51,8 @@ class Catalog extends Resource
                     'catalogable' => MorphTo::make(__('Parent'), 'catalogable')
                         ->types($this->getCatalogableResources())
                         ->nullable()
-                        ->searchable(),
+                        ->searchable()
+                        ->hideWhenCreating(),
 
                     'name' => Text::make(__('Name'), 'name')
                         ->required()

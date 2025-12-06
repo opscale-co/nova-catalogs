@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Auth\PasswordValidationRules;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Opscale\NovaCatalogs\Models\Catalog;
 use Override;
 
 /**
@@ -65,6 +67,12 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules(fn (): array => $this->model()->validationRules['password'] ?? [])
                 ->updateRules(fn (): array => $this->model()->validationRules['password'] ?? []),
+
+            Select::make('Country')
+                ->options(Catalog::options('countries'))
+                ->displayUsingLabels()
+                ->searchable()
+                ->nullable(),
         ];
     }
 

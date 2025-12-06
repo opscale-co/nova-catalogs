@@ -7,7 +7,7 @@ use Opscale\NovaCatalogs\Models\Catalog;
 
 trait CatalogRepository
 {
-    public static function fromKey(string $key): Catalog
+    public static function fromKey(string $key): ?Catalog
     {
         $cacheKey = 'opscale.catalogs.' . $key;
 
@@ -22,16 +22,18 @@ trait CatalogRepository
     {
         $catalog = static::fromKey($key);
 
-        return $catalog->items->pluck('name', 'key')->toArray();
+        return $catalog == null ? [] :
+            $catalog->items->pluck('name', 'key')->toArray();
     }
 
     public static function filteredOptions(string $key, callable $filter): array
     {
         $catalog = static::fromKey($key);
 
-        $collection = $catalog->items->filter(function ($item) use ($filter) {
-            return $filter($item);
-        });
+        $collection = $catalog == null ? [] :
+            $catalog->items->filter(function ($item) use ($filter) {
+                return $filter($item);
+            });
 
         return $collection->pluck('name', 'key')->toArray();
     }
