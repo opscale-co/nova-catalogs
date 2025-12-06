@@ -46,16 +46,16 @@ class CatalogItem extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            'catalog' => BelongsTo::make(_('Catalog'), 'catalog', Catalog::class)
+            'catalog' => BelongsTo::make(__('Catalog'), 'catalog', Catalog::class)
                 ->sortable()
                 ->filterable(),
 
-            'name' => Text::make(_('Name'), 'name')
+            'name' => Text::make(__('Name'), 'name')
                 ->required()
                 ->rules($this->model()?->validationRules['name'])
                 ->sortable(),
 
-            'key' => Slug::make(_('Key'), 'key')
+            'key' => Slug::make(__('Key'), 'key')
                 ->from('name')
                 ->separator('-')
                 ->required()
