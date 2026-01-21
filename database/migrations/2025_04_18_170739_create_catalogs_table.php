@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('key')->unique();
             $table->string('description', 512)->nullable();
-            $table->json('metadata')->nullable();
+            $table->json('data')->nullable();
         });
     }
 

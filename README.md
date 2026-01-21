@@ -78,11 +78,11 @@ use Opscale\NovaCatalogs\Models\Catalog;
 Catalog::options('countries');
 ```
 
-Catalogs and catalog items have a `metadata` field for storing extra information. Use `filteredOptions()` to filter by metadata or other properties:
+Catalogs and catalog items have a `data` field for storing extra information. Use `filteredOptions()` to filter by data or other properties:
 
 ```php
-// Filter options using a callback (e.g., by metadata)
-Catalog::filteredOptions('countries', fn ($item) => $item->metadata['continent'] === 'europe');
+// Filter options using a callback (e.g., by data)
+Catalog::filteredOptions('countries', fn ($item) => $item->data['continent'] === 'europe');
 ```
 
 Use with Nova Select fields:

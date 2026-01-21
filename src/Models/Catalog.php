@@ -4,11 +4,13 @@ namespace Opscale\NovaCatalogs\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Opscale\NovaCatalogs\Models\Concerns\Extensible;
 use Opscale\NovaCatalogs\Models\Repositories\CatalogRepository;
 
 class Catalog extends Model
 {
     use CatalogRepository;
+    use Extensible;
     use HasUlids;
 
     public $timestamps = false;
@@ -20,18 +22,18 @@ class Catalog extends Model
         'description' => ['nullable', 'max:512'],
         'name' => ['required', 'max:256'],
         'key' => ['required', 'max:25'],
-        'metadata' => ['nullable', 'json'],
+        'data' => ['nullable', 'json'],
     ];
 
     protected $fillable = [
         'name',
         'key',
         'description',
-        'metadata',
+        'data',
     ];
 
     protected $casts = [
-        'metadata' => 'array',
+        'data' => 'array',
     ];
 
     public function items()

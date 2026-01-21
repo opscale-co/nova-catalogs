@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Opscale\NovaCatalogs\Models\CatalogItem as Model;
@@ -45,6 +46,11 @@ class CatalogItem extends Resource
 
     public function fields(NovaRequest $request)
     {
+        return array_values($this->defaultFields($request));
+    }
+
+    protected function defaultFields(NovaRequest $request)
+    {
         return [
             'catalog' => BelongsTo::make(__('Catalog'), 'catalog', Catalog::class)
                 ->sortable()
@@ -62,12 +68,16 @@ class CatalogItem extends Resource
                 ->rules($this->model()?->validationRules['key'])
                 ->sortable(),
 
-            'metadata' => KeyValue::make(__('Metadata'), 'metadata')
-                ->rules($this->model()?->validationRules['metadata'])
+            'description' => Textarea::make(__('Description'), 'description')
+                ->rules($this->model()?->validationRules['description'])
+                ->nullable(),
+
+            'data' => KeyValue::make(__('Data'), 'data')
+                ->rules($this->model()?->validationRules['data'])
                 ->keyLabel('Key')
                 ->valueLabel('Value')
                 ->actionText('Add Item')
-                ->exceptOnForms(),
+                ->onlyOnDetail(),
         ];
     }
 }

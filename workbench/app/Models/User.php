@@ -7,7 +7,7 @@ use Enigma\ValidatorTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Opscale\NovaCatalogs\Concerns\Catalogable;
+use Opscale\NovaCatalogs\Models\Concerns\Catalogable;
 use Workbench\Database\Factories\UserFactory;
 
 /**

@@ -47,40 +47,46 @@ class Catalog extends Resource
     {
         return [
             Tab::group('Catalog', [
-                Tab::make('Details', [
-                    'catalogable' => MorphTo::make(__('Parent'), 'catalogable')
-                        ->types($this->getCatalogableResources())
-                        ->nullable()
-                        ->searchable()
-                        ->hideWhenCreating(),
-
-                    'name' => Text::make(__('Name'), 'name')
-                        ->required()
-                        ->rules($this->model()?->validationRules['name'])
-                        ->sortable(),
-
-                    'key' => Slug::make(__('Key'), 'key')
-                        ->from('name')
-                        ->separator('-')
-                        ->required()
-                        ->rules($this->model()?->validationRules['key'])
-                        ->sortable(),
-
-                    'description' => Textarea::make(__('Description'), 'description')
-                        ->rules($this->model()?->validationRules['description']),
-
-                    'metadata' => KeyValue::make(__('Metadata'), 'metadata')
-                        ->rules($this->model()?->validationRules['metadata'])
-                        ->keyLabel('Key')
-                        ->valueLabel('Value')
-                        ->actionText('Add Item')
-                        ->exceptOnForms(),
-                ]),
+                Tab::make('Details', array_values($this->defaultFields($request))),
 
                 Tab::make('Items', [
-                    'items' => HasMany::make(__('Items'), 'items', CatalogItem::class),
+                    HasMany::make(__('Items'), 'items', CatalogItem::class),
                 ]),
             ]),
+        ];
+    }
+
+    protected function defaultFields(NovaRequest $request): array
+    {
+        return [
+            'catalogable' => MorphTo::make(__('Parent'), 'catalogable')
+                ->types($this->getCatalogableResources())
+                ->nullable()
+                ->searchable()
+                ->hideWhenCreating(),
+
+            'name' => Text::make(__('Name'), 'name')
+                ->required()
+                ->rules($this->model()?->validationRules['name'])
+                ->sortable(),
+
+            'key' => Slug::make(__('Key'), 'key')
+                ->from('name')
+                ->separator('-')
+                ->required()
+                ->rules($this->model()?->validationRules['key'])
+                ->sortable(),
+
+            'description' => Textarea::make(__('Description'), 'description')
+                ->alwaysShow()
+                ->rules($this->model()?->validationRules['description']),
+
+            'data' => KeyValue::make(__('Data'), 'data')
+                ->rules($this->model()?->validationRules['data'])
+                ->keyLabel('Key')
+                ->valueLabel('Value')
+                ->actionText('Add Item')
+                ->onlyOnDetail(),
         ];
     }
 
@@ -89,7 +95,7 @@ class Catalog extends Resource
      *
      * @return array<class-string<\Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>>, string>
      */
-    private function getCatalogableResources(): array
+    protected function getCatalogableResources(): array
     {
         /** @var array<class-string<\Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>>, string> $resources */
         $resources = (new Collection(Nova::$resources))

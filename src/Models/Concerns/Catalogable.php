@@ -1,6 +1,6 @@
 <?php
 
-namespace Opscale\NovaCatalogs\Concerns;
+namespace Opscale\NovaCatalogs\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Opscale\NovaCatalogs\Models\Catalog;

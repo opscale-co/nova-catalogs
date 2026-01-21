@@ -13,7 +13,8 @@ return new class extends Migration
             $table->foreignUlid('catalog_id')->constrained();
             $table->string('name');
             $table->string('key');
-            $table->json('metadata')->nullable();
+            $table->text('description')->nullable();
+            $table->json('data')->nullable();
 
             $table->unique(['catalog_id', 'key']);
         });

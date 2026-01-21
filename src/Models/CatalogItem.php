@@ -5,26 +5,29 @@ namespace Opscale\NovaCatalogs\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Opscale\NovaCatalogs\Concerns\Catalogable;
+use Opscale\NovaCatalogs\Models\Concerns\Catalogable;
+use Opscale\NovaCatalogs\Models\Concerns\Extensible;
 
 class CatalogItem extends Model
 {
-    use HasUlids;
     use Catalogable;
+    use Extensible;
+    use HasUlids;
 
     public $timestamps = false;
 
     public $casts = [
-        'metadata' => 'object',
+        'data' => 'array',
     ];
 
     /**
      * @var array<string, array<int, string>>
      */
     public array $validationRules = [
+        'description' => ['nullable', 'max:512'],
         'name' => ['required', 'max:256'],
         'key' => ['required', 'max:25'],
-        'metadata' => ['nullable', 'json'],
+        'data' => ['nullable', 'json'],
     ];
 
     public function catalog()
