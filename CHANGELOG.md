@@ -2,6 +2,11 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## <small>1.2.2 (2026-01-21)</small>
+
+* Merge branch 'main' of https://github.com/opscale-co/nova-catalogs ([b43b20d](https://github.com/opscale-co/nova-catalogs/commit/b43b20d))
+* refactor(catalog and catalogitem): added extensible concern and renamed metadata to data ([3590253](https://github.com/opscale-co/nova-catalogs/commit/3590253))
+
 ## <small>1.2.1 (2025-12-06)</small>
 
 * docs(readme): updated readme ([8a9548a](https://github.com/opscale-co/nova-catalogs/commit/8a9548a))
