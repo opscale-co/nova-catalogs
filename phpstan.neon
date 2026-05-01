@@ -20,27 +20,14 @@ parameters:
             message: '#.*#'
             path: '*ServiceProvider.php'
 
-        # Tests require direct instantiation and helpers — strict DIP/helper rules don't apply
+        # Tests use PHPUnit-style methods that the OCP rule flags
         -
-            identifier: solid.dip.disallowInstantiation
-            path: tests/*
-        -
-            identifier: smells.helpersRestriction.helper
+            identifier: solid.ocp.conditionalOverride
             path: tests/*
 
         # Nova resources use __() for translations — standard Nova pattern
         -
             identifier: smells.helpersRestriction.helper
+            message: '#Helper function "__\(\)" usage detected#'
             paths:
                 - src/Nova/*
-
-        # Controllers catch exceptions at HTTP boundary for JSON error responses
-        -
-            identifier: smells.enforceLogicHandling
-            path: src/Http/Controllers/*
-        -
-            identifier: smells.enforceLogicHandling.import
-            path: src/Http/Controllers/*
-        -
-            identifier: smells.noDummyCatches
-            path: src/Http/Controllers/*

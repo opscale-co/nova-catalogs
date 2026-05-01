@@ -1,33 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opscale\NovaCatalogs\Models\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @phpstan-require-extends Model
+ */
 trait Extensible
 {
-    /**
-     * Determine if a get mutator exists for an attribute.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function hasGetMutator($key)
+    #[\Override]
+    public function hasGetMutator($key): bool
     {
-        if (in_array($key, $this->appends ?? [], true)) {
+        if (in_array($key, $this->getAppends(), true)) {
             return true;
         }
 
         return parent::hasGetMutator($key);
     }
 
-    /**
-     * Determine if a set mutator exists for an attribute.
-     *
-     * @param  string  $key
-     * @return bool
-     */
-    public function hasSetMutator($key)
+    #[\Override]
+    public function hasSetMutator($key): bool
     {
-        if (in_array($key, $this->appends ?? [], true)) {
+        if (in_array($key, $this->getAppends(), true)) {
             return true;
         }
 
@@ -37,9 +34,10 @@ trait Extensible
     /**
      * Get a dynamic data value by key (with casts applied).
      */
-    public function getData(string $key, mixed $default = null): mixed
+    final public function getData(string $key, mixed $default = null): mixed
     {
-        $data = $this->data ?? [];
+        /** @var array<string, mixed> $data */
+        $data = $this->getAttribute('data') ?? [];
 
         return $data[$key] ?? $default;
     }
@@ -47,7 +45,7 @@ trait Extensible
     /**
      * Set a dynamic data value by key.
      */
-    public function setData(string $key, mixed $value): static
+    final public function setData(string $key, mixed $value): static
     {
         $data = $this->getRawData();
         $data[$key] = $value;
@@ -59,9 +57,10 @@ trait Extensible
     /**
      * Check if a dynamic data key exists.
      */
-    public function hasData(string $key): bool
+    final public function hasData(string $key): bool
     {
-        $data = $this->data ?? [];
+        /** @var array<string, mixed> $data */
+        $data = $this->getAttribute('data') ?? [];
 
         return array_key_exists($key, $data);
     }
@@ -69,7 +68,7 @@ trait Extensible
     /**
      * Remove a dynamic data key.
      */
-    public function removeData(string $key): static
+    final public function removeData(string $key): static
     {
         $data = $this->getRawData();
         unset($data[$key]);
@@ -78,32 +77,20 @@ trait Extensible
         return $this;
     }
 
-    /**
-     * Get the value of an attribute using its mutator.
-     *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return mixed
-     */
-    protected function mutateAttribute($key, $value)
+    #[\Override]
+    protected function mutateAttribute($key, $value): mixed
     {
-        if (in_array($key, $this->appends ?? [], true)) {
+        if (in_array($key, $this->getAppends(), true)) {
             return $this->getData($key);
         }
 
         return parent::mutateAttribute($key, $value);
     }
 
-    /**
-     * Set the value of an attribute using its mutator.
-     *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return mixed
-     */
-    protected function setMutatedAttributeValue($key, $value)
+    #[\Override]
+    protected function setMutatedAttributeValue($key, $value): mixed
     {
-        if (in_array($key, $this->appends ?? [], true)) {
+        if (in_array($key, $this->getAppends(), true)) {
             return $this->setData($key, $value);
         }
 
@@ -115,7 +102,7 @@ trait Extensible
      *
      * @return array<string, mixed>
      */
-    protected function getRawData(): array
+    final protected function getRawData(): array
     {
         $raw = $this->attributes['data'] ?? null;
 
@@ -124,9 +111,17 @@ trait Extensible
         }
 
         if (is_array($raw)) {
+            /** @var array<string, mixed> $raw */
             return $raw;
         }
 
-        return json_decode($raw, true) ?? [];
+        if (! is_string($raw)) {
+            return [];
+        }
+
+        /** @var array<string, mixed>|null $decoded */
+        $decoded = json_decode($raw, true);
+
+        return $decoded ?? [];
     }
 }

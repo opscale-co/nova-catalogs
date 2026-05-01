@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Opscale\NovaCatalogs\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
@@ -13,12 +14,17 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 use Opscale\NovaCatalogs\Models\CatalogItem as Model;
 
+/**
+ * @extends Resource<Model>
+ */
 class CatalogItem extends Resource
 {
+    /** @var class-string<Model> */
     public static $model = Model::class;
 
     public static $title = 'name';
 
+    /** @var array<int, string> */
     public static $search = [
         'name',
         'key',
@@ -31,28 +37,38 @@ class CatalogItem extends Resource
      */
     public static $displayInNavigation = false;
 
-    public static function label()
+    final public static function label(): string
     {
         return __('Items');
     }
 
-    public static function singularLabel()
+    final public static function singularLabel(): string
     {
         return __('Item');
     }
 
-    public static function uriKey()
+    final public static function uriKey(): string
     {
         return __('catalog-items');
     }
 
-    public function fields(NovaRequest $request)
+    /**
+     * @return array<int, Field>
+     */
+    final public function fields(NovaRequest $request): array
     {
         return array_values($this->defaultFields($request));
     }
 
-    protected function defaultFields(NovaRequest $request)
+    /**
+     * @return array<string, Field>
+     */
+    final protected function defaultFields(NovaRequest $request): array
     {
+        /** @var Model $model */
+        $model = $this->model();
+        $rules = $model->validationRules();
+
         return [
             'catalog' => BelongsTo::make(__('Catalog'), 'catalog', Catalog::class)
                 ->sortable()
@@ -60,22 +76,22 @@ class CatalogItem extends Resource
 
             'name' => Text::make(__('Name'), 'name')
                 ->required()
-                ->rules($this->model()?->validationRules()['name'])
+                ->rules($rules['name'])
                 ->sortable(),
 
             'key' => Slug::make(__('Key'), 'key')
                 ->from('name')
                 ->separator('-')
                 ->required()
-                ->rules($this->model()?->validationRules()['key'])
+                ->rules($rules['key'])
                 ->sortable(),
 
             'description' => Textarea::make(__('Description'), 'description')
-                ->rules($this->model()?->validationRules()['description'])
+                ->rules($rules['description'])
                 ->nullable(),
 
             'data' => KeyValue::make(__('Data'), 'data')
-                ->rules($this->model()?->validationRules()['data'])
+                ->rules($rules['data'])
                 ->keyLabel('Key')
                 ->valueLabel('Value')
                 ->actionText('Add Item')

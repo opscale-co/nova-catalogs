@@ -34,22 +34,6 @@ composer require opscale-co/nova-catalogs
 
 ```
 
-Next up, you must register the tool with Nova. This is typically done in the `tools` method of the `NovaServiceProvider`.
-
-```php
-
-// in app/Providers/NovaServiceProvider.php
-// ...
-public function tools()
-{
-    return [
-        // ...
-        new \Opscale\NovaCatalogs\Tool(),
-    ];
-}
-
-```
-
 ## Usage
 
 ### Via UI

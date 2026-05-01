@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Opscale\NovaCatalogs\Nova;
 
 use Illuminate\Support\Collection;
+use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\KeyValue;
 use Laravel\Nova\Fields\MorphTo;
@@ -15,37 +16,45 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Resource;
 use Laravel\Nova\Tabs\Tab;
-use Opscale\NovaCatalogs\Concerns\Catalogable;
 use Opscale\NovaCatalogs\Models\Catalog as Model;
+use Opscale\NovaCatalogs\Models\Concerns\Catalogable;
 
+/**
+ * @extends Resource<Model>
+ */
 class Catalog extends Resource
 {
+    /** @var class-string<Model> */
     public static $model = Model::class;
 
     public static $title = 'name';
 
+    /** @var array<int, string> */
     public static $search = [
         'name',
         'key',
         'description',
     ];
 
-    public static function label()
+    final public static function label(): string
     {
         return __('Catalogs');
     }
 
-    public static function singularLabel()
+    final public static function singularLabel(): string
     {
         return __('Catalog');
     }
 
-    public static function uriKey()
+    final public static function uriKey(): string
     {
         return __('catalogs');
     }
 
-    public function fields(NovaRequest $request)
+    /**
+     * @return array<int, mixed>
+     */
+    final public function fields(NovaRequest $request): array
     {
         return [
             Tab::group('Catalog', [
@@ -58,8 +67,15 @@ class Catalog extends Resource
         ];
     }
 
-    protected function defaultFields(NovaRequest $request): array
+    /**
+     * @return array<string, Field>
+     */
+    final protected function defaultFields(NovaRequest $request): array
     {
+        /** @var Model $model */
+        $model = $this->model();
+        $rules = $model->validationRules();
+
         return [
             'catalogable' => MorphTo::make(__('Parent'), 'catalogable')
                 ->types($this->getCatalogableResources())
@@ -69,22 +85,22 @@ class Catalog extends Resource
 
             'name' => Text::make(__('Name'), 'name')
                 ->required()
-                ->rules($this->model()?->validationRules()['name'])
+                ->rules($rules['name'])
                 ->sortable(),
 
             'key' => Slug::make(__('Key'), 'key')
                 ->from('name')
                 ->separator('-')
                 ->required()
-                ->rules($this->model()?->validationRules()['key'])
+                ->rules($rules['key'])
                 ->sortable(),
 
             'description' => Textarea::make(__('Description'), 'description')
                 ->alwaysShow()
-                ->rules($this->model()?->validationRules()['description']),
+                ->rules($rules['description']),
 
             'data' => KeyValue::make(__('Data'), 'data')
-                ->rules($this->model()?->validationRules()['data'])
+                ->rules($rules['data'])
                 ->keyLabel('Key')
                 ->valueLabel('Value')
                 ->actionText('Add Item')
@@ -95,14 +111,14 @@ class Catalog extends Resource
     /**
      * Get all Nova resources whose models use the Catalogable trait.
      *
-     * @return array<class-string<\Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>>, string>
+     * @return array<class-string<resource<\Illuminate\Database\Eloquent\Model>>, string>
      */
-    protected function getCatalogableResources(): array
+    final protected function getCatalogableResources(): array
     {
-        /** @var array<class-string<\Laravel\Nova\Resource<\Illuminate\Database\Eloquent\Model>>, string> $resources */
+        /** @var array<class-string<resource<\Illuminate\Database\Eloquent\Model>>, string> $resources */
         $resources = (new Collection(Nova::$resources))
-            ->filter(function (string $resource): bool {
-                /** @var class-string<\Laravel\Nova\Resource> $resource */
+            ->filter(static function (string $resource): bool {
+                /** @var class-string<resource<\Illuminate\Database\Eloquent\Model>> $resource */
                 /** @var class-string<\Illuminate\Database\Eloquent\Model> $model */
                 $model = $resource::$model;
                 $traits = class_uses_recursive($model);

@@ -29,8 +29,8 @@ it('persists a catalog with items and reads them back via relationships', functi
     expect($stored->id)->not->toBeEmpty()
         ->and($stored->data)->toBe(['scope' => 'brand'])
         ->and($stored->items)->toHaveCount(2)
-        ->and($stored->items->firstWhere('key', 'red')->data)->toBe(['hex' => '#ff0000'])
-        ->and($stored->items->first()->catalog->key)->toBe('colors');
+        ->and($stored->items->firstWhere('key', 'red')?->data)->toBe(['hex' => '#ff0000'])
+        ->and($stored->items->first()?->catalog->key)->toBe('colors');
 });
 
 it('enforces the unique key constraint on catalogs', function (): void {

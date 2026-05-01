@@ -1,22 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opscale\NovaCatalogs\Http\Middleware;
 
+use Closure;
 use Illuminate\Http\Request;
 use Laravel\Nova\Nova;
-use Opscale\NovaCatalogs\Tool;
+use Laravel\Nova\Tool as NovaTool;
+use Opscale\NovaCatalogs\Package;
+use Symfony\Component\HttpFoundation\Response;
 
 class Authorize
 {
-    public function handle(Request $request, $next)
+    final public function handle(Request $request, Closure $next): Response
     {
-        $tool = collect(Nova::registeredTools())->first([$this, 'matchesTool']);
+        $package = $this->resolvePackage();
 
-        return optional($tool)->authorize($request) ? $next($request) : abort(403);
+        if ($package === null || ! $package->authorize($request)) {
+            abort(403);
+        }
+
+        return $next($request);
     }
 
-    public function matchesTool($tool)
+    final public function matchesPackage(NovaTool $tool): bool
     {
-        return $tool instanceof Tool;
+        return $tool instanceof Package;
+    }
+
+    private function resolvePackage(): ?Package
+    {
+        foreach (Nova::registeredTools() as $tool) {
+            if ($this->matchesPackage($tool)) {
+                /** @var Package $tool */
+                return $tool;
+            }
+        }
+
+        return null;
     }
 }

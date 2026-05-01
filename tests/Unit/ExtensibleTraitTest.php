@@ -31,14 +31,14 @@ it('exposes appended data keys via attribute access', function (): void {
     $catalog = new Catalog(['data' => ['priority' => 'high']]);
     $catalog->setAppends(['priority']);
 
-    expect($catalog->priority)->toBe('high');
+    expect($catalog->getAttribute('priority'))->toBe('high');
 });
 
 it('writes appended data keys back into the data column', function (): void {
     $catalog = new Catalog(['data' => []]);
     $catalog->setAppends(['priority']);
 
-    $catalog->priority = 'low';
+    $catalog->setAttribute('priority', 'low');
 
     expect($catalog->getData('priority'))->toBe('low');
 });

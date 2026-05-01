@@ -7,7 +7,7 @@ namespace Opscale\NovaCatalogs\Tests;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\NovaCoreServiceProvider;
 use Laravel\Nova\NovaServiceProvider;
-use Opscale\NovaCatalogs\ToolServiceProvider;
+use Opscale\NovaCatalogs\PackageServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Override;
 
@@ -25,7 +25,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return array_merge(parent::getPackageProviders($app), [
-            ToolServiceProvider::class,
+            PackageServiceProvider::class,
             NovaCoreServiceProvider::class,
             NovaServiceProvider::class,
         ]);

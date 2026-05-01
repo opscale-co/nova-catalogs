@@ -6,10 +6,23 @@ namespace Opscale\NovaCatalogs\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Opscale\NovaCatalogs\Models\Concerns\Extensible;
 use Opscale\NovaCatalogs\Models\Repositories\CatalogRepository;
 use Opscale\Validations\Validatable;
 
+/**
+ * @property string $id
+ * @property string $name
+ * @property string $key
+ * @property string|null $description
+ * @property array<string, mixed>|null $data
+ * @property string|null $catalogable_type
+ * @property string|null $catalogable_id
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, CatalogItem> $items
+ * @property-read \Illuminate\Database\Eloquent\Model|null $catalogable
+ */
 class Catalog extends Model
 {
     use CatalogRepository;
@@ -19,6 +32,7 @@ class Catalog extends Model
 
     public $timestamps = false;
 
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'key',
@@ -26,6 +40,7 @@ class Catalog extends Model
         'data',
     ];
 
+    /** @var array<string, string> */
     protected $casts = [
         'data' => 'array',
     ];
@@ -33,7 +48,7 @@ class Catalog extends Model
     /**
      * @return array<string, array<int, string>>
      */
-    public function validationRules(): array
+    final public function validationRules(): array
     {
         return [
             'description' => ['nullable', 'max:512'],
@@ -43,12 +58,18 @@ class Catalog extends Model
         ];
     }
 
-    public function items()
+    /**
+     * @return HasMany<CatalogItem, $this>
+     */
+    final public function items(): HasMany
     {
         return $this->hasMany(CatalogItem::class);
     }
 
-    public function catalogable()
+    /**
+     * @return MorphTo<Model, $this>
+     */
+    final public function catalogable(): MorphTo
     {
         return $this->morphTo();
     }

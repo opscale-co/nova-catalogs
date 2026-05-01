@@ -9,11 +9,11 @@
     ],
     "scripts": {
         "lint": {
-            "phpstan": false
+            "phpstan": ["vendor/bin/phpstan", "analyse", "--no-progress", "--memory-limit=1G"]
         },
         "fix": {
             "phpstan": false
         }
     },
-    "processTimeout": 120
+    "processTimeout": 300
 }

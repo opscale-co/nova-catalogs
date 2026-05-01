@@ -8,7 +8,7 @@ providers:
   - Laravel\Dusk\DuskServiceProvider
   - Workbench\App\Providers\WorkbenchServiceProvider
   - Workbench\App\Providers\NovaServiceProvider
-  - Opscale\NovaCatalogs\ToolServiceProvider
+  - Opscale\NovaCatalogs\PackageServiceProvider
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder

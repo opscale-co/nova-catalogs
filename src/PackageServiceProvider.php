@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opscale\NovaCatalogs;
 
 use Opscale\NovaCatalogs\Nova\Catalog;
@@ -8,7 +10,7 @@ use Opscale\NovaPackageTools\NovaPackageServiceProvider;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 
-class ToolServiceProvider extends NovaPackageServiceProvider
+class PackageServiceProvider extends NovaPackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

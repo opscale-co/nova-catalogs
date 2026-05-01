@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Workbench\App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Laravel\Fortify\Features;
 use Laravel\Nova\DevTool\DevTool as Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Opscale\NovaCatalogs\Tool;
+use Opscale\NovaCatalogs\Package;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -28,7 +30,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools(): array
     {
         return [
-            new Tool,
+            new Package,
         ];
     }
 

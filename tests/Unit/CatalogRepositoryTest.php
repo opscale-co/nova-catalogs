@@ -32,8 +32,8 @@ it('returns the catalog when fromKey matches an existing key', function () use (
     $catalog = Catalog::fromKey('sizes');
 
     expect($catalog)->not->toBeNull()
-        ->and($catalog->key)->toBe('sizes')
-        ->and($catalog->items)->toHaveCount(2);
+        ->and($catalog?->key)->toBe('sizes')
+        ->and($catalog?->items)->toHaveCount(2);
 });
 
 it('returns null when no catalog matches the given key', function (): void {
@@ -52,9 +52,10 @@ it('returns the cached catalog on subsequent calls', function () use ($seed): vo
     Catalog::fromKey('colors');
     $catalog->delete();
 
-    expect(Catalog::fromKey('colors'))
-        ->not->toBeNull()
-        ->key->toBe('colors');
+    $cached = Catalog::fromKey('colors');
+
+    expect($cached)->not->toBeNull()
+        ->and($cached?->key)->toBe('colors');
 });
 
 it('returns a key-indexed associative array from options', function () use ($seed): void {
