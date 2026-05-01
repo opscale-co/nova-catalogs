@@ -2,6 +2,11 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## 1.3.0 (2026-05-01)
+
+* Merge branch 'main' of https://github.com/opscale-co/nova-catalogs ([a8cf7ee](https://github.com/opscale-co/nova-catalogs/commit/a8cf7ee))
+* feat(catalog): integrate Validatable trait and add full test stack ([ad66b27](https://github.com/opscale-co/nova-catalogs/commit/ad66b27))
+
 ## <small>1.2.2 (2026-01-21)</small>
 
 * Merge branch 'main' of https://github.com/opscale-co/nova-catalogs ([b43b20d](https://github.com/opscale-co/nova-catalogs/commit/b43b20d))
