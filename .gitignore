@@ -1,5 +1,9 @@
 /.claude
+/.data
 /.vscode
+/tests/Browser/console
+/tests/Browser/screenshots
+/tests/Browser/source
 /coverage-html
 /build
 /vendor

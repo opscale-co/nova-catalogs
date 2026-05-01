@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Opscale\NovaCatalogs\Nova;
 
 use Illuminate\Support\Collection;
@@ -67,22 +69,22 @@ class Catalog extends Resource
 
             'name' => Text::make(__('Name'), 'name')
                 ->required()
-                ->rules($this->model()?->validationRules['name'])
+                ->rules($this->model()?->validationRules()['name'])
                 ->sortable(),
 
             'key' => Slug::make(__('Key'), 'key')
                 ->from('name')
                 ->separator('-')
                 ->required()
-                ->rules($this->model()?->validationRules['key'])
+                ->rules($this->model()?->validationRules()['key'])
                 ->sortable(),
 
             'description' => Textarea::make(__('Description'), 'description')
                 ->alwaysShow()
-                ->rules($this->model()?->validationRules['description']),
+                ->rules($this->model()?->validationRules()['description']),
 
             'data' => KeyValue::make(__('Data'), 'data')
-                ->rules($this->model()?->validationRules['data'])
+                ->rules($this->model()?->validationRules()['data'])
                 ->keyLabel('Key')
                 ->valueLabel('Value')
                 ->actionText('Add Item')
