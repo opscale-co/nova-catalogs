@@ -2,6 +2,10 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## <small>1.3.1 (2026-05-02)</small>
+
+* refactor(package): apply strict-rules and rename Tool to Package ([c240d41](https://github.com/opscale-co/nova-catalogs/commit/c240d41))
+
 ## 1.3.0 (2026-05-01)
 
 * Merge branch 'main' of https://github.com/opscale-co/nova-catalogs ([a8cf7ee](https://github.com/opscale-co/nova-catalogs/commit/a8cf7ee))
