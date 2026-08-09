@@ -13,11 +13,9 @@ use Override;
 
 abstract class TestCase extends Orchestra
 {
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
-
         Route::middlewareGroup('nova', []);
     }
 

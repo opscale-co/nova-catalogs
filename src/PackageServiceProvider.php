@@ -23,8 +23,8 @@ class PackageServiceProvider extends NovaPackageServiceProvider
                 CatalogItem::class,
             ])
             ->hasTranslations()
-            ->hasInstallCommand(function (InstallCommand $command) {
-                $command
+            ->hasInstallCommand(function (InstallCommand $installCommand): void {
+                $installCommand
                     ->askToStarRepoOnGitHub('opscale-co/nova-catalogs');
             });
     }

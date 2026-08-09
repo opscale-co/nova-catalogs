@@ -33,7 +33,7 @@ trait CatalogRepository
     {
         $catalog = static::fromKey($key);
 
-        if ($catalog === null) {
+        if (! $catalog instanceof Catalog) {
             return [];
         }
 
@@ -50,7 +50,7 @@ trait CatalogRepository
     {
         $catalog = static::fromKey($key);
 
-        if ($catalog === null) {
+        if (! $catalog instanceof Catalog) {
             return [];
         }
 

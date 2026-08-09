@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Opscale\NovaCatalogs\Models\Catalog;
 
 $seed = static function (string $key, array $items): Catalog {
-    $catalog = Catalog::create([
+    $catalog = Catalog::query()->create([
         'name' => ucfirst($key),
         'key' => $key,
     ]);
@@ -41,7 +41,7 @@ it('returns null when no catalog matches the given key', function (): void {
 });
 
 it('skips catalogs that have no items', function (): void {
-    Catalog::create(['name' => 'Empty', 'key' => 'empty']);
+    Catalog::query()->create(['name' => 'Empty', 'key' => 'empty']);
 
     expect(Catalog::fromKey('empty'))->toBeNull();
 });
@@ -81,7 +81,7 @@ it('applies the predicate when calling filteredOptions', function () use ($seed)
 
     $result = Catalog::filteredOptions(
         'regions',
-        fn ($item) => str_starts_with($item->name, 'N'),
+        fn ($item): bool => str_starts_with($item->name, 'N'),
     );
 
     expect($result)->toBe(['na' => 'North America']);

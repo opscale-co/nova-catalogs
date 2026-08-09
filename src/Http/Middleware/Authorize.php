@@ -17,16 +17,16 @@ class Authorize
     {
         $package = $this->resolvePackage();
 
-        if ($package === null || ! $package->authorize($request)) {
+        if (! $package instanceof Package || ! $package->authorize($request)) {
             abort(403);
         }
 
         return $next($request);
     }
 
-    final public function matchesPackage(NovaTool $tool): bool
+    final public function matchesPackage(NovaTool $novaTool): bool
     {
-        return $tool instanceof Package;
+        return $novaTool instanceof Package;
     }
 
     private function resolvePackage(): ?Package

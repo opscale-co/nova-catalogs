@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Opscale\NovaCatalogs\Tests;
 
+use Illuminate\Support\Sleep;
 use Laravel\Dusk\Browser;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\Dusk\TestCase as BaseTestCase;
@@ -29,7 +30,7 @@ abstract class DuskTestCase extends BaseTestCase
                 return;
             }
 
-            usleep(100_000);
+            Sleep::usleep(100_000);
         }
     }
 

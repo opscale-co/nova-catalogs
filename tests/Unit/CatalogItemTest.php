@@ -9,6 +9,7 @@ use Opscale\NovaCatalogs\Models\Catalog;
 use Opscale\NovaCatalogs\Models\CatalogItem;
 use Opscale\NovaCatalogs\Models\Concerns\Catalogable;
 use Opscale\NovaCatalogs\Models\Concerns\Extensible;
+use Opscale\Validations\Validatable;
 
 it('does not use timestamps', function (): void {
     expect((new CatalogItem)->timestamps)->toBeFalse();
@@ -41,19 +42,19 @@ it('uses ULIDs, catalogable, extensible and validatable traits', function (): vo
         ->toContain(HasUlids::class)
         ->toContain(Catalogable::class)
         ->toContain(Extensible::class)
-        ->toContain(Opscale\Validations\Validatable::class);
+        ->toContain(Validatable::class);
 });
 
 it('defines a belongsTo relation to a catalog', function (): void {
-    $relation = (new CatalogItem)->catalog();
+    $belongsTo = (new CatalogItem)->catalog();
 
-    expect($relation)->toBeInstanceOf(BelongsTo::class)
-        ->and($relation->getRelated())->toBeInstanceOf(Catalog::class);
+    expect($belongsTo)->toBeInstanceOf(BelongsTo::class)
+        ->and($belongsTo->getRelated())->toBeInstanceOf(Catalog::class);
 });
 
 it('defines a polymorphic catalogs relation through the catalogable trait', function (): void {
-    $relation = (new CatalogItem)->catalogs();
+    $morphMany = (new CatalogItem)->catalogs();
 
-    expect($relation)->toBeInstanceOf(MorphMany::class)
-        ->and($relation->getRelated())->toBeInstanceOf(Catalog::class);
+    expect($morphMany)->toBeInstanceOf(MorphMany::class)
+        ->and($morphMany->getRelated())->toBeInstanceOf(Catalog::class);
 });

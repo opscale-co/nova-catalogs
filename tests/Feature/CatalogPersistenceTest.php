@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\QueryException;
 use Opscale\NovaCatalogs\Models\Catalog;
 use Opscale\NovaCatalogs\Models\CatalogItem;
 
 it('persists a catalog with items and reads them back via relationships', function (): void {
-    $catalog = Catalog::create([
+    $catalog = Catalog::query()->create([
         'name' => 'Colors',
         'key' => 'colors',
         'description' => 'Brand colors',
@@ -34,19 +35,19 @@ it('persists a catalog with items and reads them back via relationships', functi
 });
 
 it('enforces the unique key constraint on catalogs', function (): void {
-    Catalog::create([
+    Catalog::query()->create([
         'name' => 'First',
         'key' => 'duplicate',
     ]);
 
-    expect(fn () => Catalog::create([
+    expect(fn () => Catalog::query()->create([
         'name' => 'Second',
         'key' => 'duplicate',
-    ]))->toThrow(Illuminate\Database\QueryException::class);
+    ]))->toThrow(QueryException::class);
 });
 
 it('enforces the unique catalog_id + key constraint on catalog items', function (): void {
-    $catalog = Catalog::create([
+    $catalog = Catalog::query()->create([
         'name' => 'Sizes',
         'key' => 'sizes',
     ]);
@@ -59,15 +60,15 @@ it('enforces the unique catalog_id + key constraint on catalog items', function 
     expect(fn () => $catalog->items()->create([
         'name' => 'Small clone',
         'key' => 'small',
-    ]))->toThrow(Illuminate\Database\QueryException::class);
+    ]))->toThrow(QueryException::class);
 });
 
 it('allows the same item key in different catalogs', function (): void {
-    $a = Catalog::create(['name' => 'A', 'key' => 'a']);
-    $b = Catalog::create(['name' => 'B', 'key' => 'b']);
+    $catalog = Catalog::query()->create(['name' => 'A', 'key' => 'a']);
+    $b = Catalog::query()->create(['name' => 'B', 'key' => 'b']);
 
-    $a->items()->create(['name' => 'Default', 'key' => 'default']);
+    $catalog->items()->create(['name' => 'Default', 'key' => 'default']);
     $b->items()->create(['name' => 'Default', 'key' => 'default']);
 
-    expect(CatalogItem::where('key', 'default')->count())->toBe(2);
+    expect(CatalogItem::query()->where('key', 'default')->count())->toBe(2);
 });

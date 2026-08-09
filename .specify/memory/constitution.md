@@ -337,7 +337,6 @@ dependencies via constructor injection.
 ## V. Opscale Actions (Business Logic Units — NON-NEGOTIABLE)
 
 Business logic lives exclusively in **Opscale Actions** (`Services/Actions/`).
-Built on [lorisleiva/laravel-actions](https://github.com/lorisleiva/laravel-actions).
 Using any other class type for business logic is a violation of this constitution.
 
 **Each Action must:**

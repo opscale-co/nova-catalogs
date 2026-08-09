@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Opscale\NovaCatalogs\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,8 +21,8 @@ use Opscale\Validations\Validatable;
  * @property array<string, mixed>|null $data
  * @property string|null $catalogable_type
  * @property string|null $catalogable_id
- * @property-read \Illuminate\Database\Eloquent\Collection<int, CatalogItem> $items
- * @property-read \Illuminate\Database\Eloquent\Model|null $catalogable
+ * @property-read Collection<int, CatalogItem> $items
+ * @property-read Model|null $catalogable
  */
 class Catalog extends Model
 {

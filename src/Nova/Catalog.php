@@ -20,7 +20,7 @@ use Opscale\NovaCatalogs\Models\Catalog as Model;
 use Opscale\NovaCatalogs\Models\Concerns\Catalogable;
 
 /**
- * @extends Resource<Model>
+ * @extends resource<Model>
  */
 class Catalog extends Resource
 {
@@ -36,16 +36,19 @@ class Catalog extends Resource
         'description',
     ];
 
+    #[\Override]
     final public static function label(): string
     {
         return __('Catalogs');
     }
 
+    #[\Override]
     final public static function singularLabel(): string
     {
         return __('Catalog');
     }
 
+    #[\Override]
     final public static function uriKey(): string
     {
         return __('catalogs');
@@ -70,7 +73,7 @@ class Catalog extends Resource
     /**
      * @return array<string, Field>
      */
-    final protected function defaultFields(NovaRequest $request): array
+    final protected function defaultFields(NovaRequest $novaRequest): array
     {
         /** @var Model $model */
         $model = $this->model();
@@ -123,9 +126,9 @@ class Catalog extends Resource
                 $model = $resource::$model;
                 $traits = class_uses_recursive($model);
 
-                return in_array(Catalogable::class, $traits ?: [], true);
+                return in_array(Catalogable::class, $traits, true);
             })
-            ->toArray();
+            ->all();
 
         return $resources;
     }
