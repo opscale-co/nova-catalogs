@@ -15,7 +15,7 @@ use Laravel\Nova\Resource;
 use Opscale\NovaCatalogs\Models\CatalogItem as Model;
 
 /**
- * @extends Resource<Model>
+ * @extends resource<Model>
  */
 class CatalogItem extends Resource
 {
@@ -37,16 +37,19 @@ class CatalogItem extends Resource
      */
     public static $displayInNavigation = false;
 
+    #[\Override]
     final public static function label(): string
     {
         return __('Items');
     }
 
+    #[\Override]
     final public static function singularLabel(): string
     {
         return __('Item');
     }
 
+    #[\Override]
     final public static function uriKey(): string
     {
         return __('catalog-items');
@@ -63,7 +66,7 @@ class CatalogItem extends Resource
     /**
      * @return array<string, Field>
      */
-    final protected function defaultFields(NovaRequest $request): array
+    final protected function defaultFields(NovaRequest $novaRequest): array
     {
         /** @var Model $model */
         $model = $this->model();

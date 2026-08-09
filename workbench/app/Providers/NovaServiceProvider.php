@@ -6,8 +6,11 @@ namespace Workbench\App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Laravel\Fortify\Features;
+use Laravel\Nova\Dashboard;
+use Laravel\Nova\Dashboards\Main;
 use Laravel\Nova\DevTool\DevTool as Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Laravel\Nova\Tool;
 use Opscale\NovaCatalogs\Package;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -15,6 +18,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Bootstrap any application services.
      */
+    #[\Override]
     public function boot(): void
     {
         parent::boot();
@@ -25,8 +29,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the tools that should be listed in the Nova sidebar.
      *
-     * @return array<int, \Laravel\Nova\Tool>
+     * @return array<int, Tool>
      */
+    #[\Override]
     public function tools(): array
     {
         return [
@@ -37,6 +42,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         parent::register();
@@ -47,6 +53,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Register the configurations for Laravel Fortify.
      */
+    #[\Override]
     protected function fortify(): void
     {
         Nova::fortify()
@@ -61,6 +68,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Register the Nova routes.
      */
+    #[\Override]
     protected function routes(): void
     {
         Nova::routes()
@@ -75,9 +83,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      *
      * This gate determines who can access Nova in non-local environments.
      */
+    #[\Override]
     protected function gate(): void
     {
-        Gate::define('viewNova', function ($user) {
+        Gate::define('viewNova', function ($user): true {
             return true;
         });
     }
@@ -85,18 +94,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     /**
      * Get the dashboards that should be listed in the Nova sidebar.
      *
-     * @return array<int, \Laravel\Nova\Dashboard>
+     * @return array<int, Dashboard>
      */
+    #[\Override]
     protected function dashboards(): array
     {
         return [
-            new \Laravel\Nova\Dashboards\Main,
+            new Main,
         ];
     }
 
     /**
      * Register the application's Nova resources.
      */
+    #[\Override]
     protected function resources(): void
     {
         Nova::resourcesInWorkbench();

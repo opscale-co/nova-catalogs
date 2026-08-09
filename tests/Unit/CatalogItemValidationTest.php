@@ -76,8 +76,8 @@ it('reports both missing name and missing key in a single failure', function ():
     try {
         (new CatalogItem(['catalog_id' => '01HZ0PRRGR0000000000000000']))->validate();
         $errors = [];
-    } catch (ValidationException $e) {
-        $errors = $e->errors();
+    } catch (ValidationException $validationException) {
+        $errors = $validationException->errors();
     }
 
     expect($errors)
@@ -86,7 +86,7 @@ it('reports both missing name and missing key in a single failure', function ():
 });
 
 it('fails validation when the key is already used by another item', function (): void {
-    $catalog = Catalog::create(['name' => 'Sizes', 'key' => 'sizes']);
+    $catalog = Catalog::query()->create(['name' => 'Sizes', 'key' => 'sizes']);
     $catalog->items()->create(['name' => 'Small', 'key' => 'small']);
 
     $duplicate = new CatalogItem([

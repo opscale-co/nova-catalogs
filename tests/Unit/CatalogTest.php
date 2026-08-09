@@ -47,15 +47,15 @@ it('uses ULIDs, the repository, extensible and validatable traits', function ():
 });
 
 it('defines a hasMany relation to catalog items', function (): void {
-    $relation = (new Catalog)->items();
+    $hasMany = (new Catalog)->items();
 
-    expect($relation)->toBeInstanceOf(HasMany::class)
-        ->and($relation->getRelated())->toBeInstanceOf(CatalogItem::class);
+    expect($hasMany)->toBeInstanceOf(HasMany::class)
+        ->and($hasMany->getRelated())->toBeInstanceOf(CatalogItem::class);
 });
 
 it('defines a polymorphic catalogable relation', function (): void {
-    $relation = (new Catalog)->catalogable();
+    $morphTo = (new Catalog)->catalogable();
 
-    expect($relation)->toBeInstanceOf(MorphTo::class)
-        ->and($relation->getMorphType())->toBe('catalogable_type');
+    expect($morphTo)->toBeInstanceOf(MorphTo::class)
+        ->and($morphTo->getMorphType())->toBe('catalogable_type');
 });

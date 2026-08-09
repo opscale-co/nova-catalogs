@@ -75,9 +75,9 @@ it('exposes failing fields through the validation exception errors bag', functio
         (new Catalog(['key' => 'colors']))->validate();
         $thrown = false;
         $errors = [];
-    } catch (ValidationException $e) {
+    } catch (ValidationException $validationException) {
         $thrown = true;
-        $errors = $e->errors();
+        $errors = $validationException->errors();
     }
 
     expect($thrown)->toBeTrue()
@@ -85,7 +85,7 @@ it('exposes failing fields through the validation exception errors bag', functio
 });
 
 it('fails validation when the key is already used by another catalog', function (): void {
-    Catalog::create(['name' => 'First', 'key' => 'shared']);
+    Catalog::query()->create(['name' => 'First', 'key' => 'shared']);
 
     expect(fn () => (new Catalog(['name' => 'Second', 'key' => 'shared']))->validate())
         ->toThrow(ValidationException::class);
