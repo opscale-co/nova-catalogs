@@ -2,6 +2,8 @@
 
 All notable changes to opscale-co/nova-api will be documented in this file.
 
+## [2.0.0](https://github.com/opscale-co/nova-catalogs/compare/v1.3.2...v2.0.0) (2026-11-07)
+
 ## [1.3.2](https://github.com/opscale-co/nova-catalogs/compare/v1.3.1...v1.3.2) (2026-08-30)
 
 ## <small>1.3.1 (2026-05-02)</small>
